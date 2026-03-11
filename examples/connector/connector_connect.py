@@ -7,6 +7,10 @@ Available AppNames:
     - AppName.GOOGLE_MAIL
 
 Change the app_name parameter below to use a different connector.
+
+Note: This example uses GL_CONNECTORS_DEFAULT_CALLBACK_URL for the callback URL.
+This is required for connector connection regardless of whether you're using
+SmartSearch credentials or GL Connectors token.
 """
 
 import asyncio

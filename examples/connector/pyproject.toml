@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Connector cookbook examples for SmartSearch SDK"
 requires-python = ">=3.11"
 dependencies = [
-    "smart-search-sdk",
+    "smart-search-sdk>=0.0.12",
     "python-dotenv",
 ]
 

@@ -8,6 +8,7 @@ from pydantic import AnyHttpUrl
 from smart_search_sdk.config.constants import EventType, SmartSearchEmitDataValue
 from smart_search_sdk.web.client import WebSearchClient
 from smart_search_sdk.web.models import GetWebPageRequest
+from smart_search_sdk.web.models.model import WebSearchEngine
 
 load_dotenv()
 
@@ -44,6 +45,7 @@ async def main():
                 },
                 "required": ["title", "content"],
             },
+            search_mode=WebSearchEngine.AUTO,
         ),
     )
     print(json.dumps(result, indent=4))

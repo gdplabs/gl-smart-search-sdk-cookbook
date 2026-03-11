@@ -49,6 +49,9 @@ All examples support these 4 connector types. Simply change the `app_name` param
 
 ## Available Examples
 
+### Token Generation
+- **`get_token.py`** - Generate SmartSearch token from user credentials (token is reusable across all clients)
+
 ### Connect (Run First!)
 - **`connector_connect.py`** - Connect connector using SmartSearch credentials
 - **`connector_connect_with_gl_connectors_token.py`** - Connect connector using GL Connectors token
@@ -72,40 +75,32 @@ All examples use token-based authentication (recommended). Here's how to get you
 
 #### Getting Your Token
 
-**Step 1:** If you don't have a token yet, generate one using your user credentials:
+If you don't have a token yet, generate one using the provided example:
 
-```python
-import asyncio
-import os
-from dotenv import load_dotenv
-from smart_search_sdk.connector.client import ConnectorClient
+1. **Set up your user credentials** in `.env`:
+   ```env
+   SMARTSEARCH_BASE_URL=https://your-api-endpoint.com/
+   SMARTSEARCH_USER_IDENTIFIER=your-user-identifier
+   SMARTSEARCH_USER_SECRET=your-user-secret
+   ```
 
-load_dotenv()
+2. **Run the token generation script:**
+   ```bash
+   uv run get_token.py
+   ```
 
-async def main():
-    client = ConnectorClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
-    await client.authenticate(
-        user_identifier=os.getenv("SMARTSEARCH_USER_IDENTIFIER"),
-        user_secret=os.getenv("SMARTSEARCH_USER_SECRET")
-    )
-    token = client.token  # Extract the token
-    print(f"SMARTSEARCH_TOKEN={token}")
+3. **Copy the printed token** and add it to your `.env` file:
+   ```env
+   SMARTSEARCH_TOKEN=your-token-here
+   ```
 
-asyncio.run(main())
-```
-
-**Step 2:** Copy the printed token and add it to your `.env` file:
-```env
-SMARTSEARCH_TOKEN=your-token-here
-```
-
-**Step 3:** Now you can use the token for all examples. The token is reusable and more efficient than generating a new one on every authentication.
+4. **Now you can use the token** for all examples. The token is reusable across all SmartSearch clients (WebSearchClient, ConnectorClient, etc.).
 
 #### Using the Token (Current Examples)
 
 All examples use token-based authentication:
 ```python
-await client.authenticate(token=os.getenv("SMARTSEARCH_TOKEN"))
+await client.authenticate(token=os.getenv("SMART_SEARCH_TOKEN"))
 ```
 
 #### Alternative: Using Credentials Directly

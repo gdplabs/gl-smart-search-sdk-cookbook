@@ -25,6 +25,9 @@ This directory contains cookbook examples for web search functionality using the
 
 ## Available Examples
 
+### Token Generation
+- **`get_token.py`** - Generate SmartSearch token from user credentials (token is reusable across all clients)
+
 ### Basic Web Search
 - **`web_search_basic.py`** - Basic web search with snippets
 - **`web_search_stream.py`** - Streaming web search
@@ -55,34 +58,26 @@ All examples use token-based authentication (recommended). Here's how to get you
 
 ### Getting Your Token
 
-**Step 1:** If you don't have a token yet, generate one using your user credentials:
+If you don't have a token yet, generate one using the provided example:
 
-```python
-import asyncio
-import os
-from dotenv import load_dotenv
-from smart_search_sdk.web.client import WebSearchClient
+1. **Set up your user credentials** in `.env`:
+   ```env
+   SMARTSEARCH_BASE_URL=https://your-api-endpoint.com/
+   SMARTSEARCH_USER_IDENTIFIER=your-user-identifier
+   SMARTSEARCH_USER_SECRET=your-user-secret
+   ```
 
-load_dotenv()
+2. **Run the token generation script:**
+   ```bash
+   uv run get_token.py
+   ```
 
-async def main():
-    client = WebSearchClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
-    await client.authenticate(
-        user_identifier=os.getenv("SMARTSEARCH_USER_IDENTIFIER"),
-        user_secret=os.getenv("SMARTSEARCH_USER_SECRET")
-    )
-    token = client.token  # Extract the token
-    print(f"SMARTSEARCH_TOKEN={token}")
+3. **Copy the printed token** and add it to your `.env` file:
+   ```env
+   SMARTSEARCH_TOKEN=your-token-here
+   ```
 
-asyncio.run(main())
-```
-
-**Step 2:** Copy the printed token and add it to your `.env` file:
-```env
-SMARTSEARCH_TOKEN=your-token-here
-```
-
-**Step 3:** Now you can use the token for all examples. The token is reusable and more efficient than generating a new one on every authentication.
+4. **Now you can use the token** for all examples. **Important:** The token is reusable across all SmartSearch clients (WebSearchClient, ConnectorClient, etc.). You only need to generate it once and can use it in both web and connector examples.
 
 ### Using the Token (Current Examples)
 

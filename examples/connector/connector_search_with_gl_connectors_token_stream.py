@@ -33,23 +33,9 @@ async def _handle_stream(client_method, request):
     return response
 
 async def main():
-    base_url = os.getenv("SMART_SEARCH_BASE_URL")
-    user_identifier = os.getenv("SMART_SEARCH_USER_IDENTIFIER")
-    user_secret = os.getenv("SMART_SEARCH_USER_SECRET")
-    if not base_url or not user_identifier or not user_secret:
-        raise ValueError("SMART_SEARCH_BASE_URL, SMART_SEARCH_USER_IDENTIFIER, and SMART_SEARCH_USER_SECRET must be set. Copy .env.example to .env and fill in your values.")
-    client = ConnectorClient(base_url=base_url)
-    await client.authenticate(user_identifier=user_identifier, user_secret=user_secret)
-    request = ConnectorRequest(query="List all my upcoming meetings today")
-    result = await _handle_stream(
-        lambda req, stream: client.search_connector(
-            app_name=AppName.GOOGLE_CALENDAR,  # Change to GITHUB, GOOGLE_DRIVE, or GOOGLE_MAIL
-            gl_token=os.getenv("GL_CONNECTORS_USER_TOKEN"),
-            request=req,
-            stream=stream
-        ),
-        request
-    )
+    client = ConnectorClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
+    await client.authenticate(token=os.getenv("SMARTSEARCH_TOKEN"))
+    result = await _handle_stream(lambda req, stream: client.search_connector(app_name=AppName.GOOGLE_CALENDAR, gl_token=os.getenv("GL_CONNECTORS_USER_TOKEN"), request=req, stream=stream), ConnectorRequest(query="List all my upcoming meetings today"))
     print(json.dumps(result, indent=4))
 
 asyncio.run(main())

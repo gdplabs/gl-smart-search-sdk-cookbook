@@ -11,18 +11,9 @@ from smart_search_sdk.web.models.model import WebSearchEngine
 load_dotenv()
 
 async def main():
-    base_url = os.getenv("SMART_SEARCH_BASE_URL")
-    user_identifier = os.getenv("SMART_SEARCH_USER_IDENTIFIER")
-    user_secret = os.getenv("SMART_SEARCH_USER_SECRET")
-    if not base_url or not user_identifier or not user_secret:
-        raise ValueError("SMART_SEARCH_BASE_URL, SMART_SEARCH_USER_IDENTIFIER, and SMART_SEARCH_USER_SECRET must be set. Copy .env.example to .env and fill in your values.")
-    client = WebSearchClient(base_url=base_url)
-    await client.authenticate(user_identifier=user_identifier, user_secret=user_secret)
-    result = await client.fetch_web_page(GetWebPageRequest(
-        source="https://docs.python.org/3/tutorial/", return_html=False,
-        json_schema={"type": "object", "properties": {"title": {"type": "string"}, "content": {"type": "string"}}, "required": ["title", "content"]},
-        search_mode=WebSearchEngine.AUTO
-    ))
+    client = WebSearchClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
+    await client.authenticate(token=os.getenv("SMARTSEARCH_TOKEN"))
+    result = await client.fetch_web_page(GetWebPageRequest(source="https://docs.python.org/3/tutorial/", return_html=False, json_schema={"type": "object", "properties": {"title": {"type": "string"}, "content": {"type": "string"}}, "required": ["title", "content"]}, search_mode=WebSearchEngine.AUTO))
     print(json.dumps(result, indent=4))
 
 asyncio.run(main())

@@ -11,9 +11,11 @@ This directory contains cookbook examples for web search functionality using the
 
 2. **Set up your environment variables** in `.env`:
    ```env
-   SMART_SEARCH_BASE_URL=https://your-api-endpoint.com/
-   SMART_SEARCH_USER_IDENTIFIER=your-user-identifier
-   SMART_SEARCH_USER_SECRET=your-user-secret
+   SMARTSEARCH_BASE_URL=https://your-api-endpoint.com/
+   SMARTSEARCH_TOKEN=your-authentication-token
+   # If you don't have a token yet, use these to generate one (see Authentication section below):
+   # SMARTSEARCH_USER_IDENTIFIER=your-user-identifier
+   # SMARTSEARCH_USER_SECRET=your-user-secret
    ```
 
 3. **Run any example:**
@@ -46,6 +48,60 @@ This directory contains cookbook examples for web search functionality using the
 - **`web_page_snippets_stream.py`** - Streaming snippet extraction
 - **`web_page_keypoints.py`** - Extract keypoints from a web page
 - **`web_page_keypoints_stream.py`** - Streaming keypoint extraction
+
+## Authentication
+
+All examples use token-based authentication (recommended). Here's how to get your token:
+
+### Getting Your Token
+
+**Step 1:** If you don't have a token yet, generate one using your user credentials:
+
+```python
+import asyncio
+import os
+from dotenv import load_dotenv
+from smart_search_sdk.web.client import WebSearchClient
+
+load_dotenv()
+
+async def main():
+    client = WebSearchClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
+    await client.authenticate(
+        user_identifier=os.getenv("SMARTSEARCH_USER_IDENTIFIER"),
+        user_secret=os.getenv("SMARTSEARCH_USER_SECRET")
+    )
+    token = client.token  # Extract the token
+    print(f"SMARTSEARCH_TOKEN={token}")
+
+asyncio.run(main())
+```
+
+**Step 2:** Copy the printed token and add it to your `.env` file:
+```env
+SMARTSEARCH_TOKEN=your-token-here
+```
+
+**Step 3:** Now you can use the token for all examples. The token is reusable and more efficient than generating a new one on every authentication.
+
+### Using the Token (Current Examples)
+
+All examples use token-based authentication:
+```python
+await client.authenticate(token=os.getenv("SMARTSEARCH_TOKEN"))
+```
+
+### Alternative: Using Credentials Directly
+
+If you prefer to use credentials directly (less efficient):
+```python
+await client.authenticate(
+    user_identifier=os.getenv("SMARTSEARCH_USER_IDENTIFIER"),
+    user_secret=os.getenv("SMARTSEARCH_USER_SECRET")
+)
+```
+
+**Note:** All examples currently use token authentication. To use credentials directly, simply replace the `authenticate()` call in any example with the credentials-based version above.
 
 ## Features
 

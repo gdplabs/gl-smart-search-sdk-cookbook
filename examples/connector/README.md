@@ -11,9 +11,11 @@ This directory contains cookbook examples for connector functionality using the 
 
 2. **Set up your environment variables** in `.env`:
    ```env
-   SMART_SEARCH_BASE_URL=https://your-api-endpoint.com/
-   SMART_SEARCH_USER_IDENTIFIER=your-user-identifier
-   SMART_SEARCH_USER_SECRET=your-user-secret
+   SMARTSEARCH_BASE_URL=https://your-api-endpoint.com/
+   SMARTSEARCH_TOKEN=your-authentication-token
+   # If you don't have a token yet, use these to generate one (see Authentication section below):
+   # SMARTSEARCH_USER_IDENTIFIER=your-user-identifier
+   # SMARTSEARCH_USER_SECRET=your-user-secret
    # Optional: Only needed for examples with GL Connectors token
    GL_CONNECTORS_USER_TOKEN=your-gl-connectors-token
    GL_CONNECTORS_DEFAULT_CALLBACK_URL=https://your-callback-url.com
@@ -62,13 +64,65 @@ All examples support these 4 connector types. Simply change the `app_name` param
 - **`connector_disconnect.py`** - Disconnect connector using SmartSearch credentials
 - **`connector_disconnect_with_gl_connectors_token.py`** - Disconnect connector using GL Connectors token
 
-## Authentication Types
+## Authentication
 
-### SmartSearch Credentials (Default)
-Examples without `_with_gl_connectors_token` suffix use `SMART_SEARCH_USER_IDENTIFIER` and `SMART_SEARCH_USER_SECRET` for authentication. No additional `GL_CONNECTORS_USER_TOKEN` is required.
+### SmartSearch Authentication
 
-### With GL Connectors Token
-Examples with `_with_gl_connectors_token` suffix require you to provide `GL_CONNECTORS_USER_TOKEN` in your `.env` file.
+All examples use token-based authentication (recommended). Here's how to get your token:
+
+#### Getting Your Token
+
+**Step 1:** If you don't have a token yet, generate one using your user credentials:
+
+```python
+import asyncio
+import os
+from dotenv import load_dotenv
+from smart_search_sdk.connector.client import ConnectorClient
+
+load_dotenv()
+
+async def main():
+    client = ConnectorClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
+    await client.authenticate(
+        user_identifier=os.getenv("SMARTSEARCH_USER_IDENTIFIER"),
+        user_secret=os.getenv("SMARTSEARCH_USER_SECRET")
+    )
+    token = client.token  # Extract the token
+    print(f"SMARTSEARCH_TOKEN={token}")
+
+asyncio.run(main())
+```
+
+**Step 2:** Copy the printed token and add it to your `.env` file:
+```env
+SMARTSEARCH_TOKEN=your-token-here
+```
+
+**Step 3:** Now you can use the token for all examples. The token is reusable and more efficient than generating a new one on every authentication.
+
+#### Using the Token (Current Examples)
+
+All examples use token-based authentication:
+```python
+await client.authenticate(token=os.getenv("SMARTSEARCH_TOKEN"))
+```
+
+#### Alternative: Using Credentials Directly
+
+If you prefer to use credentials directly (less efficient):
+```python
+await client.authenticate(
+    user_identifier=os.getenv("SMARTSEARCH_USER_IDENTIFIER"),
+    user_secret=os.getenv("SMARTSEARCH_USER_SECRET")
+)
+```
+
+**Note:** All examples currently use token authentication. To use credentials directly, simply replace the `authenticate()` call in any example with the credentials-based version above.
+
+### GL Connectors Token (Optional)
+
+Examples with `_with_gl_connectors_token` suffix require you to provide `GL_CONNECTORS_USER_TOKEN` in your `.env` file. This is separate from SmartSearch authentication and is used for connector-specific operations.
 
 **⚠️ IMPORTANT:** The `GL_CONNECTORS_USER_TOKEN` must match the GL Connectors API Key and Base URL configured in your Smart Search server settings. Ensure these values are correctly set in your Smart Search server configuration before using these examples.
 

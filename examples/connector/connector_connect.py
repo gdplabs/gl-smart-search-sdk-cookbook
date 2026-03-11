@@ -18,10 +18,17 @@ from smart_search_sdk.connector.models import ConnectorConnectRequest, AppName
 
 load_dotenv()
 
+
 async def main():
     client = ConnectorClient(base_url=os.getenv("SMARTSEARCH_BASE_URL"))
     await client.authenticate(token=os.getenv("SMARTSEARCH_TOKEN"))
-    result = await client.connect_connector(app_name=AppName.GOOGLE_CALENDAR, request=ConnectorConnectRequest(callback_url=os.getenv("GL_CONNECTORS_DEFAULT_CALLBACK_URL")))
+    result = await client.connect_connector(
+        app_name=AppName.GOOGLE_CALENDAR,
+        request=ConnectorConnectRequest(
+            callback_url=os.getenv("GL_CONNECTORS_DEFAULT_CALLBACK_URL")
+        ),
+    )
     print(json.dumps(result, indent=4))
+
 
 asyncio.run(main())

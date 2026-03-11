@@ -22,20 +22,20 @@ This directory contains cookbook examples for connector functionality using the 
    ```
 
 3. **Workflow: Connect → Search → Disconnect**
-   
+
    **⚠️ Important:** You must connect a connector before you can search it. Follow this sequence:
-   
+
    ```bash
    # Step 1: Connect a connector (required first)
    uv run connector_connect.py
-   
+
    # Step 2: Search the connected connector
    uv run connector_search.py
-   
+
    # Step 3: Disconnect when done (optional)
    uv run connector_disconnect.py
    ```
-   
+
    If you try to search before connecting, you'll get an error. Always run `connector_connect.py` first.
 
 ## Available Connectors

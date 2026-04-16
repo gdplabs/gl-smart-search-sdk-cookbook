@@ -5,6 +5,9 @@ Available AppNames:
     - AppName.GITHUB
     - AppName.GOOGLE_DRIVE
     - AppName.GOOGLE_MAIL
+    - AppName.MICROSOFT_ONEDRIVE
+    - AppName.MICROSOFT_OUTLOOK
+    - AppName.MICROSOFT_CALENDAR
 
 Change the app_name parameter below to use a different connector.
 """

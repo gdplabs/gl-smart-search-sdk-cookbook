@@ -40,12 +40,15 @@ This directory contains cookbook examples for connector functionality using the 
 
 ## Available Connectors
 
-All examples support these 4 connector types. Simply change the `app_name` parameter in the code:
+All examples support these 7 connector types. Simply change the `app_name` parameter in the code:
 
 - **`AppName.GOOGLE_CALENDAR`** - Google Calendar integration
 - **`AppName.GITHUB`** - GitHub integration
 - **`AppName.GOOGLE_DRIVE`** - Google Drive integration
 - **`AppName.GOOGLE_MAIL`** - Google Mail integration
+- **`AppName.MICROSOFT_ONEDRIVE`** - Microsoft OneDrive (`microsoft_onedrive`)
+- **`AppName.MICROSOFT_OUTLOOK`** - Microsoft Outlook (`microsoft_outlook`)
+- **`AppName.MICROSOFT_CALENDAR`** - Microsoft Calendar (`microsoft_calendar`)
 
 ## Available Examples
 
@@ -133,6 +136,9 @@ app_name=AppName.GOOGLE_CALENDAR
 app_name=AppName.GITHUB
 app_name=AppName.GOOGLE_DRIVE
 app_name=AppName.GOOGLE_MAIL
+app_name=AppName.MICROSOFT_ONEDRIVE
+app_name=AppName.MICROSOFT_OUTLOOK
+app_name=AppName.MICROSOFT_CALENDAR
 ```
 
 ## Features
@@ -140,5 +146,5 @@ app_name=AppName.GOOGLE_MAIL
 - **Simple & Minimal**: Each example is a standalone, executable file
 - **Async/Await**: All examples use modern async patterns
 - **Streaming Support**: Examples for both regular and streaming responses
-- **Multiple Connectors**: Support for Google Calendar, GitHub, Google Drive, and Google Mail
+- **Multiple Connectors**: Google Calendar, GitHub, Google Drive, Google Mail, Microsoft OneDrive, Microsoft Outlook, and Microsoft Calendar
 - **Token Flexibility**: Choose between SmartSearch credentials or GL Connectors token

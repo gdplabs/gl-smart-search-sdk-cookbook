@@ -9,7 +9,7 @@ Copy the printed token to your .env file as SMARTSEARCH_TOKEN.
 import asyncio
 import os
 from dotenv import load_dotenv
-from smart_search_sdk.web.client import WebSearchClient
+from gl_smart_search_sdk.web.client import WebSearchClient
 
 load_dotenv()
 

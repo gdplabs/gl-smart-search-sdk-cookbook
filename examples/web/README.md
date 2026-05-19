@@ -1,6 +1,6 @@
 # Web Search Examples
 
-This directory contains cookbook examples for web search functionality using the SmartSearch SDK.
+This directory contains cookbook examples for web search functionality using the [GL Smart Search SDK](https://pypi.org/project/gl-smart-search-sdk/) (`gl-smart-search-sdk`).
 
 ## Quick Start
 

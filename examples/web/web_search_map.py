@@ -4,8 +4,8 @@ import asyncio
 import json
 import os
 from dotenv import load_dotenv
-from smart_search_sdk.web.client import WebSearchClient
-from smart_search_sdk.web.models import GetWebSearchMapRequest
+from gl_smart_search_sdk.web.client import WebSearchClient
+from gl_smart_search_sdk.web.models import GetWebSearchMapRequest
 
 load_dotenv()
 

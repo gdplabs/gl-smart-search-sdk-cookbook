@@ -5,10 +5,10 @@ import json
 import os
 from dotenv import load_dotenv
 from pydantic import AnyHttpUrl
-from smart_search_sdk.config.constants import EventType, SmartSearchEmitDataValue
-from smart_search_sdk.web.client import WebSearchClient
-from smart_search_sdk.web.models import GetWebPageRequest
-from smart_search_sdk.web.models.model import WebSearchEngine
+from gl_smart_search_sdk.config.constants import EventType, GLSmartSearchEmitDataValue
+from gl_smart_search_sdk.web.client import WebSearchClient
+from gl_smart_search_sdk.web.models import GetWebPageRequest
+from gl_smart_search_sdk.web.models.model import WebSearchEngine
 
 load_dotenv()
 
@@ -24,7 +24,7 @@ async def _handle_stream(client_method, request):
                 else str(item)
                 for item in chunk.value.data
             ]
-        elif chunk.value.data_type == SmartSearchEmitDataValue.ACTIVITY:
+        elif chunk.value.data_type == GLSmartSearchEmitDataValue.ACTIVITY:
             print(json.dumps(chunk.value.data_value.model_dump(mode="json"), indent=4))
     return response
 
